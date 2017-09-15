@@ -310,6 +310,7 @@ message ParamSpec {
 // LayerParameter next available layer-specific ID: 149 (last added: shuffle_channel_param)
 // LayerParameter next available layer-specific ID: 150 (last added: margin_inner_product_param)
 // LayerParameter next available layer-specific ID: 151 (last added: large_margin_inner_product_param)
+// LayerParameter next available layer-specific ID: 152 (last added: chunking_param)
 
 message LayerParameter {
   optional string name = 1; // the layer name
@@ -371,6 +372,7 @@ message LayerParameter {
   optional ConcatParameter concat_param = 104;
   optional MarginInnerProductParameter margin_inner_product_param = 149;
   optional LargeMarginInnerProductParameter largemargin_inner_product_param = 150;
+  optional ChunkingParameter chunking_param = 151;
   optional ContrastiveLossParameter contrastive_loss_param = 105;
   optional ConvolutionParameter convolution_param = 106;
   optional CropParameter crop_param = 144;
@@ -1464,3 +1466,30 @@ message LargeMarginInnerProductParameter {
   optional float lambda_min = 9 [default = 0];
 }
 
+message ChunkingParameter {
+    //optional uint32 num_output = 1; // The number of outputs for the layer
+    //optional bool bias_term = 2 [default = true]; // whether to have bias terms
+    // Pad, kernel size, and stride are all given as a single value for equal
+    // dimensions in height and width or as Y, X pairs.
+    optional uint32 local_size = 1 [default = 0]; // The padding size (equal in Y, X)
+    optional uint32 local_h = 5 [default = 0]; // The padding height
+    optional uint32 local_w = 6 [default = 0]; // The padding width
+    optional uint32 kernel_size = 2; // The kernel size (square)
+    optional uint32 kernel_h = 7; // The kernel height
+    optional uint32 kernel_w = 8; // The kernel width
+    //optional uint32 group = 5 [default = 1]; // The group size for group conv
+    optional uint32 stride = 3 [default = 1]; // The stride (equal in Y, X)
+    optional uint32 stride_h = 9; // The stride height
+    optional uint32 stride_w = 10; // The stride width
+    optional uint32 im_size = 4;
+    optional uint32 im_h = 11;
+    optional uint32 im_w = 12;
+    //optional FillerParameter weight_filler = 7; // The filler for the weight
+    //optional FillerParameter bias_filler = 8; // The filler for the bias
+    //enum Engine {
+    //  DEFAULT = 0;
+    //  CAFFE = 1;
+    //  CUDNN = 2;
+    //}
+    //optional Engine engine = 15 [default = DEFAULT];
+}
