@@ -2,22 +2,21 @@
 # Caffe
 
 
-// LayerParameter next available layer-specific ID: 148 (last added: center_loss_param)
-// LayerParameter next available layer-specific ID: 149 (last added: shuffle_channel_param)
-// LayerParameter next available layer-specific ID: 150 (last added: margin_inner_product_param)
-// LayerParameter next available layer-specific ID: 151 (last added: large_margin_inner_product_param)
-// LayerParameter next available layer-specific ID: 152 (last added: chunking_param)
-// LayerParameter next available layer-specific ID: 158 (last added: label_specific_rescale_paran)
-
-message LayerParameter {
 
 New layers:
+
 center-loss
+
 channel-shuffle 
+
 margin-inner-product
+
 large-margin-inner-product
+
 chunking
+
 label-specific-add
+
 normalize
 
 Caffe is a deep learning framework made with expression, speed, and modularity in mind.
