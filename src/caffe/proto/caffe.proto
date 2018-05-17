@@ -311,6 +311,11 @@ message ParamSpec {
 // LayerParameter next available layer-specific ID: 150 (last added: margin_inner_product_param)
 // LayerParameter next available layer-specific ID: 151 (last added: large_margin_inner_product_param)
 // LayerParameter next available layer-specific ID: 152 (last added: chunking_param)
+// LayerParameter next available layer-specific ID: 153 (last added: normalize_param)
+// LayerParameter next available layer-specific ID: 154 (last added: label_specific_add_param)
+
+
+
 
 message LayerParameter {
   optional string name = 1; // the layer name
@@ -363,6 +368,9 @@ message LayerParameter {
   // for their implementation. These layers include an Engine type and
   // engine parameter for selecting the implementation.
   // The default for the engine is set by the ENGINE switch at compile-time.
+  optional NormalizeParameter normalize_param = 152;
+  optional LabelSpecificAddParameter label_specific_add_param = 153;
+
   optional AccuracyParameter accuracy_param = 102;
   optional ArgMaxParameter argmax_param = 103;
   optional BatchNormParameter batch_norm_param = 139;
@@ -813,6 +821,7 @@ message InfogainLossParameter {
   optional string source = 1;
 }
 
+
 message InnerProductParameter {
   optional uint32 num_output = 1; // The number of outputs for the layer
   optional bool bias_term = 2 [default = true]; // whether to have bias terms
@@ -828,7 +837,26 @@ message InnerProductParameter {
   // of the weight matrix. The weight matrix itself is not going to be transposed
   // but rather the transfer flag of operations will be toggled accordingly.
   optional bool transpose = 6 [default = false];
+  optional bool normalize = 7 [default = false];
 }
+
+
+//message InnerProductParameter {
+//  optional uint32 num_output = 1; // The number of outputs for the layer
+//  optional bool bias_term = 2 [default = true]; // whether to have bias terms
+//  optional FillerParameter weight_filler = 3; // The filler for the weight
+//  optional FillerParameter bias_filler = 4; // The filler for the bias
+//
+//  // The first axis to be lumped into a single inner product computation;
+//  // all preceding axes are retained in the output.
+//  // May be negative to index from the end (e.g., -1 for the last axis).
+//  optional int32 axis = 5 [default = 1];
+//  // Specify whether to transpose the weight matrix or not.
+//  // If transpose == true, any operations will be performed on the transpose
+//  // of the weight matrix. The weight matrix itself is not going to be transposed
+//  // but rather the transfer flag of operations will be toggled accordingly.
+//  optional bool transpose = 6 [default = false];
+//}
 
 message InputParameter {
   // This layer produces N >= 1 top blob(s) to be assigned manually.
@@ -1232,6 +1260,8 @@ message V1LayerParameter {
     DROPOUT = 6;
     DUMMY_DATA = 32;
     EUCLIDEAN_LOSS = 7;
+    L2FEATURE_LOSS = 40;
+
     ELTWISE = 25;
     EXP = 38;
     FLATTEN = 8;
@@ -1492,4 +1522,17 @@ message ChunkingParameter {
     //  CUDNN = 2;
     //}
     //optional Engine engine = 15 [default = DEFAULT];
+}
+
+
+message LabelSpecificAddParameter {
+  optional float bias = 1 [default = 0.0];
+  optional bool transform_test = 2 [default = false];
+}
+
+
+message NormalizeParameter {
+  optional string normalize_type = 1 [default = "L2"];
+  optional bool fix_gradient = 2 [default = false];
+  optional bool bp_norm = 3 [default = false];
 }

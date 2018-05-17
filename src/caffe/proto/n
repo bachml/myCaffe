@@ -1,0 +1,22 @@
+
+  optional NormalizeParameter normalize_param = 214;
+
+
+message NormalizeParameter {
+  optional string normalize_type = 1 [default = "L2"];
+  optional bool fix_gradient = 2 [default = false];
+  optional bool bp_norm = 3 [default = false];
+}
+
+
+
+  optional LabelSpecificRescaleParameter label_specific_rescale_param = 228;
+
+
+  optional LabelSpecificAddParameter label_specific_add_param = 241;
+
+
+message LabelSpecificAddParameter {
+  optional float bias = 1 [default = 0.0];
+  optional bool transform_test = 2 [default = false];
+}
